@@ -1,0 +1,56 @@
+
+.create-author_dialog{
+    max-height: 85%;
+    overflow-y: auto;
+    max-width: 725px;
+    display: inline;
+    border-radius: 0.5rem;
+}
+
+.create-author_form{
+    width: auto;
+    margin-top: 1rem;
+}
+
+/* sm'a kadar  */
+@media screen and (max-width: 640px){
+    .create-author_dialog{
+        width: 90%;
+        flex-direction: column;
+        align-items: center;
+        padding:1.5rem;
+        display: inline;
+    }
+
+    /* table ustundeki container */
+    .create-author_dialog > .container{
+        padding-right:0;
+        padding-left:0;
+    }
+    /* table kismi */
+    .create-author_dialog > .container table{
+        white-space: nowrap;
+    }
+
+    .create-author_dialog > .container table tbody tr, .create-author_dialog > .container table tbody td{
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+
+/* sm ve md arası */
+@media screen and (max-width: 768px) and (min-width: 640px)  {
+    .create-author_form > div{
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
+    }
+
+    .create-author_form > div > div:nth-child(2){
+        margin-top:0!important;
+      }
+
+      .create-author_form > div div{
+        width: 45%;
+      }
+  }

@@ -1,0 +1,23 @@
+{
+  "name": "librarysystemorhomebyadakansoftware",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Adakan Library Core - modern kutuphane yonetim sistemi monorepo.",
+  "scripts": {
+    "install:all": "npm install --prefix apps/api && npm install --prefix apps/web",
+    "dev": "powershell -ExecutionPolicy Bypass -File scripts/dev.ps1",
+    "dev:api": "npm run dev --prefix apps/api",
+    "dev:web": "npm run dev --prefix apps/web -- --port 3000",
+    "build": "npm run typecheck:api && npm run build --prefix apps/web",
+    "typecheck:api": "cd apps/api && npx tsc --noEmit",
+    "migrate": "npm run migrate --prefix apps/api",
+    "seed": "npm run seed --prefix apps/api",
+    "start:web": "npm run start --prefix apps/web -- --port 3000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adakansoftware/librarysystemorhomebyadakansoftware.git"
+  },
+  "author": "Adakan Software",
+  "license": "ISC"
+}
