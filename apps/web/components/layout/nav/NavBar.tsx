@@ -1,6 +1,7 @@
 "use client";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { Disclosure } from "@headlessui/react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { RxHamburgerMenu } from "react-icons/rx";
 import NavbarLinks from "./navbar-links";
@@ -42,8 +43,15 @@ const NavBar = () => {
                   onClick={() => router.push("/")}
                 >
                   <div className="flex items-center gap-2 text-white">
-                    <span className="grid h-9 w-9 place-items-center rounded-lg bg-white text-sm font-black text-gray-900">
-                      AS
+                    <span className="grid h-9 w-9 place-items-center overflow-hidden rounded-lg bg-white p-1">
+                      <Image
+                        src="/images/logo.png"
+                        alt="Adakan Software"
+                        width={28}
+                        height={28}
+                        className="h-7 w-7 object-contain"
+                        priority
+                      />
                     </span>
                     <div className="hidden leading-tight sm:block">
                       <p className="text-sm font-bold">Adakan Library Core</p>
