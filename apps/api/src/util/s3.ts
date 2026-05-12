@@ -44,6 +44,10 @@ export async function uploadFileToS3(
 }
 
 export async function getFileToS3(fileName: string) {
+  if (fileName.startsWith("/") || /^https?:\/\//.test(fileName)) {
+    return fileName;
+  }
+
   const getObjectParams = {
     Bucket: bucketName,
     Key: fileName,

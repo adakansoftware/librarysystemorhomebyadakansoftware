@@ -1,7 +1,12 @@
 import bcrypt from "bcrypt";
 import db from "../../db";
 import AuthorityModel from "../models/authority";
+import AuthorModel from "../models/author";
+import BookModel from "../models/book";
+import BookCategoryModel from "../models/book_category";
+import CategoryModel from "../models/category";
 import EventTypeModel from "../models/event_type";
+import PublisherModel from "../models/publisher";
 import StatusModel from "../models/status";
 import UserModel from "../models/user";
 
@@ -44,6 +49,205 @@ const eventTypes = [
   ["35", "user_update"],
 ] as const;
 
+const libraryBooks = [
+  {
+    title: "Aforizmalar",
+    authorName: "Franz",
+    authorSurname: "Kafka",
+    category: "Dusunce",
+    image: "aforizmalar.jpg",
+  },
+  {
+    title: "Atomik Alışkanlıklar",
+    authorName: "James",
+    authorSurname: "Clear",
+    category: "Kisisel Gelisim",
+    image: "atomik-aliskanliklar.jpg",
+  },
+  {
+    title: "Atomik Alışkanlıklar Çalışma Kitabı",
+    authorName: "James",
+    authorSurname: "Clear",
+    category: "Kisisel Gelisim",
+    image: "atomik-alıiskanliklar-calisma.jpg",
+  },
+  {
+    title: "Beyaz Diş",
+    authorName: "Jack",
+    authorSurname: "London",
+    category: "Roman",
+    image: "beyaz-dis.jpg",
+  },
+  {
+    title: "Beyaz Zambaklar Ülkesinde",
+    authorName: "Grigory",
+    authorSurname: "Petrov",
+    category: "Klasik",
+    image: "beyaz-zambaklar-ulkesinde.jpg",
+  },
+  {
+    title: "Cimri",
+    authorName: "Moliere",
+    authorSurname: "",
+    category: "Tiyatro",
+    image: "cimri.jpg",
+  },
+  {
+    title: "Deccal",
+    authorName: "Friedrich",
+    authorSurname: "Nietzsche",
+    category: "Felsefe",
+    image: "deccal.jpg",
+  },
+  {
+    title: "Değirmenimden Mektuplar",
+    authorName: "Alphonse",
+    authorSurname: "Daudet",
+    category: "Hikaye",
+    image: "degirmenimden-mektuplar.jpg",
+  },
+  {
+    title: "Doğudaki Hayalet",
+    authorName: "Pierre",
+    authorSurname: "Loti",
+    category: "Roman",
+    image: "dogudaki-hayalet.jpg",
+  },
+  {
+    title: "Dönüşüm",
+    authorName: "Franz",
+    authorSurname: "Kafka",
+    category: "Klasik",
+    image: "donusum.jpg",
+  },
+  {
+    title: "Efendi ile Uşak",
+    authorName: "Lev",
+    authorSurname: "Tolstoy",
+    category: "Hikaye",
+    image: "efendi-ile-usak.jpg",
+  },
+  {
+    title: "Ev Sahibesi",
+    authorName: "Fyodor",
+    authorSurname: "Dostoyevski",
+    category: "Roman",
+    image: "ev-sahibesi.jpg",
+  },
+  {
+    title: "Hacı Murat",
+    authorName: "Lev",
+    authorSurname: "Tolstoy",
+    category: "Roman",
+    image: "haci-murat.jpg",
+  },
+  {
+    title: "Hastalık Hastası",
+    authorName: "Moliere",
+    authorSurname: "",
+    category: "Tiyatro",
+    image: "hastalik-hastasi.jpg",
+  },
+  {
+    title: "İçimizdeki Şeytan",
+    authorName: "Sabahattin",
+    authorSurname: "Ali",
+    category: "Roman",
+    image: "icimizdeki-seytan.jpg",
+  },
+  {
+    title: "İki Şehrin Hikayesi",
+    authorName: "Charles",
+    authorSurname: "Dickens",
+    category: "Klasik",
+    image: "iki-sehrin-hikayesi.jpg",
+  },
+  {
+    title: "İlk Aşk",
+    authorName: "Ivan",
+    authorSurname: "Turgenyev",
+    category: "Roman",
+    image: "ilk-ask.jpg",
+  },
+  {
+    title: "İtiraflarım",
+    authorName: "Lev",
+    authorSurname: "Tolstoy",
+    category: "Otobiyografi",
+    image: "itiraflarim.jpg",
+  },
+  {
+    title: "Kısa Hikayeler",
+    authorName: "Anton",
+    authorSurname: "Cehov",
+    category: "Hikaye",
+    image: "kisa-hikayeler.jpg",
+  },
+  {
+    title: "Marslı",
+    authorName: "Andy",
+    authorSurname: "Weir",
+    category: "Bilim Kurgu",
+    image: "marsli.jpg",
+  },
+  {
+    title: "Marti",
+    authorName: "Richard",
+    authorSurname: "Bach",
+    category: "Roman",
+    image: "marti.jpg",
+  },
+  {
+    title: "Milena'ya Mektuplar",
+    authorName: "Franz",
+    authorSurname: "Kafka",
+    category: "Mektup",
+    image: "milenaya-mektuplar.jpg",
+  },
+  {
+    title: "Putların Alacakaranlığı",
+    authorName: "Friedrich",
+    authorSurname: "Nietzsche",
+    category: "Felsefe",
+    image: "putlarin-alacakaranligi.jpg",
+  },
+  {
+    title: "Savaş Sanatı",
+    authorName: "Sun",
+    authorSurname: "Tzu",
+    category: "Strateji",
+    image: "savas-sanati.jpg",
+  },
+  {
+    title: "Sokrates'in Savunması",
+    authorName: "Platon",
+    authorSurname: "",
+    category: "Felsefe",
+    image: "sokratesin-savunmasi.jpg",
+  },
+  {
+    title: "Vahşetin Çağrısı",
+    authorName: "Jack",
+    authorSurname: "London",
+    category: "Roman",
+    image: "vahsetin-cagrisi.jpg",
+  },
+  {
+    title: "Yeraltından Notlar",
+    authorName: "Fyodor",
+    authorSurname: "Dostoyevski",
+    category: "Klasik",
+    image: "yeraltindan-notlar.jpg",
+  },
+  {
+    title: "Yüzbaşının Kızı",
+    authorName: "Aleksandr",
+    authorSurname: "Puskin",
+    category: "Roman",
+    image: "yuzbasinin-kizi.jpg",
+  },
+] as const;
+
 async function seedDemo() {
   await db.authenticate();
 
@@ -82,7 +286,76 @@ async function seedDemo() {
     },
   });
 
-  console.log("Demo seed completed. Admin: adakan_admin / AdakanDemo2026!");
+  const [publisher] = await PublisherModel.findOrCreate({
+    where: { publisher_name: "Kisisel Kitaplik" },
+    defaults: { publisher_name: "Kisisel Kitaplik" },
+  });
+
+  for (const libraryBook of libraryBooks) {
+    const [author] = await AuthorModel.findOrCreate({
+      where: {
+        author_name: libraryBook.authorName,
+        author_surname: libraryBook.authorSurname,
+      },
+      defaults: {
+        author_name: libraryBook.authorName,
+        author_surname: libraryBook.authorSurname,
+      },
+    });
+
+    const [category] = await CategoryModel.findOrCreate({
+      where: { category_name: libraryBook.category },
+      defaults: { category_name: libraryBook.category },
+    });
+
+    const bookImage = `/images/books/${libraryBook.image}`;
+    const bookSummary = `${libraryBook.title} kütüphanedeki kitaplardan biridir.`;
+    const existingBook = await BookModel.findOne({
+      where: { book_image: bookImage },
+    });
+
+    const [book] = existingBook
+      ? [existingBook]
+      : await BookModel.findOrCreate({
+          where: {
+            book_title: libraryBook.title,
+            author_id: author.author_id,
+          },
+          defaults: {
+            book_title: libraryBook.title,
+            author_id: author.author_id,
+            publisher_id: publisher.publisher_id,
+            status_id: "2",
+            book_image: bookImage,
+            book_summary: bookSummary,
+          },
+        });
+
+    book.set({
+      book_title: libraryBook.title,
+      author_id: author.author_id,
+      publisher_id: publisher.publisher_id,
+      status_id: "2",
+      book_image: bookImage,
+      book_summary: bookSummary,
+    });
+    await book.save();
+
+    await BookCategoryModel.findOrCreate({
+      where: {
+        book_id: book.book_id,
+        category_id: category.category_id,
+      },
+      defaults: {
+        book_id: book.book_id,
+        category_id: category.category_id,
+      },
+    });
+  }
+
+  console.log(
+    `Demo seed completed. Admin: adakan_admin / AdakanDemo2026! Books: ${libraryBooks.length}`
+  );
   await db.close();
 }
 
