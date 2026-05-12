@@ -191,7 +191,7 @@ const libraryBooks = [
     image: "marsli.jpg",
   },
   {
-    title: "Marti",
+    title: "Martı",
     authorName: "Richard",
     authorSurname: "Bach",
     category: "Roman",
